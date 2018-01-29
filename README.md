@@ -1,12 +1,22 @@
-# Initializer for StatNLP service in Go
+# Initializer for StatNLP service in Go (v2.0)
 
-
+## Releases 
+- [Versions](https://github.com/sutd-statnlp/initializer-statnlp-service-go/releases)
 ## Installation
 
-    go get -u github.com/goadesign/goa/...
+        go get github.com/gin-gonic/gin
     
-## Development
+        go get github.com/gin-contrib/static
 
-    go build -o app.out
+        go get github.com/stretchr/testify/assert
 
-    ./app.out
+## Developement
+
+        go build -o app.out
+
+        ./app.out
+
+## Testing
+
+        go test ./test
+

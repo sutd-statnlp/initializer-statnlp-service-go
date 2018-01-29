@@ -1,32 +1,26 @@
 package main
 
 import (
-	"statnlp-initializer-service-go/app"
+	"github.com/gin-gonic/gin"
 
-	"github.com/goadesign/goa"
-	"github.com/goadesign/goa/middleware"
+	"./controller"
+	"./resource"
 )
 
 func main() {
-	// Create service
-	service := goa.New("intital")
+	router := setupRoutes()
 
-	// Mount middleware
-	service.Use(middleware.RequestID())
-	service.Use(middleware.LogRequest(true))
-	service.Use(middleware.ErrorHandler(service, true))
-	service.Use(middleware.Recover())
+	router.Run(":8080")
+}
 
-	// Mount "message" controller
-	c := NewMessageController(service)
-	app.MountMessageController(service, c)
-	// Mount "swagger" controller
-	c2 := NewSwaggerController(service)
-	app.MountSwaggerController(service, c2)
+func setupRoutes() *gin.Engine {
+	router := gin.Default()
 
-	// Start service
-	if err := service.ListenAndServe(":8080"); err != nil {
-		service.LogError("startup", "err", err)
-	}
+	homeController := controller.HomeController{}
+	homeController.InitRoutes(router)
 
+	messageResource := resource.MessageResource{}
+	messageResource.InitRoutes(router)
+
+	return router
 }
